@@ -1,17 +1,25 @@
 #!/bin/bash
 
-if [ $# -ne 2 ]; then
+if [ $# -lt 2 ]; then
     echo >&2 "Usage: $0 <directory> <file suffix>"
     echo >&2 "     e.g: $0 . gpx"
     exit 1
 fi
 
 #shopt -s nullglob
+files=($1/*.$2)
+total=${#files[@]}
+count=0
 for i in $1/*.$2
 do
+  let count+=1
+  if [ $3 == 'skip' -a $count -eq $total ]; then
+     echo 'Skipping last day'
+     break
+  fi
   if [ 	! -f "$i".in_strava ]; then
-    echo "Uploading $i..."
-    result=$(/bin/bash "$(dirname $0)/stravaup" $i )
+    echo "Day $count Uploading $i..."
+    result=$(/bin/bash "$(dirname $0)/stravaup" $i $count)
     if echo "${result}" | grep -q 'Your activity is still being processed.'; then
       echo "Upload OK. Response: " 
       echo "${result}"
