@@ -27,7 +27,7 @@ fi
 
 # Check file type
 filename=$(basename "$1")
-suffix="${filename#*.}"
+suffix="gpx"
 datatype=""
 if [ "$suffix" = "fit" ]; then
     datatype="$suffix"
@@ -76,4 +76,4 @@ if [ "$TOKEN" = "" ]; then
 fi
 
 # Upload file
-curl -X POST https://www.strava.com/api/v3/uploads -H "Authorization: Bearer $TOKEN" -F file=@"$1" -F data_type="$datatype" -F name="Большой Иберийский Поход. День $2" -F description="https://vk.com/ksv_v_pohode"
+curl -X POST https://www.strava.com/api/v3/uploads -H "Authorization: Bearer $TOKEN" -F file=@"$1" -F data_type="$datatype" -F name="Велопоход по Корее с ребенком. День $2" -F description="https://vk.com/ksv_v_pohode"
