@@ -17,8 +17,10 @@ do
      echo 'Skipping last day'
      break
   fi
-  size=$(du -k "$i" | cut -f 1)
-  if [ $size -le 2 ]; then
+#  size=$(du -k "$i" | cut -f 1)
+
+  size=$(wc -c <"$i")
+  if [ $size -le 1600 ]; then
 	  let count-=1
 	  continue
   fi
